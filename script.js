@@ -149,28 +149,28 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-// 模拟下载功能
-function simulateDownload(platform) {
-    showNotification(`正在下载 ${platform} 版本...`, 'info');
+// 移除模拟下载功能
+// function simulateDownload(platform) {
+//     showNotification(`正在跳转 ${platform} 版本...`, 'info');
     
-    // 模拟下载延迟
-    setTimeout(() => {
-        showNotification(`${platform} 版本下载完成！`, 'success');
-    }, 2000);
-}
+//     // 模拟下载延迟
+//     setTimeout(() => {
+//         showNotification(`${platform} 版本跳转完成！`, 'success');
+//     }, 2000);
+// }
 
 // 添加下载按钮事件监听器
-document.addEventListener('DOMContentLoaded', function() {
-    const downloadButtons = document.querySelectorAll('.download-card .btn');
+// document.addEventListener('DOMContentLoaded', function() {
+//     const downloadButtons = document.querySelectorAll('.download-card .btn');
     
-    downloadButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const platform = this.closest('.download-card').querySelector('h3').textContent;
-            simulateDownload(platform);
-        });
-    });
-});
+//     downloadButtons.forEach(button => {
+//         button.addEventListener('click', function(e) {
+//             e.preventDefault();
+//             const platform = this.closest('.download-card').querySelector('h3').textContent;
+//             simulateDownload(platform);
+//         });
+//     });
+// });
 
 // 移动端菜单切换
 function initMobileMenu() {
