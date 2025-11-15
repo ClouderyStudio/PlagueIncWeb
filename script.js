@@ -174,8 +174,12 @@ function showNotification(message, type = 'info') {
 
 // 移动端菜单切换
 function initMobileMenu() {
-    const header = document.querySelector('header');
-    const nav = document.querySelector('nav');
+    let header = document.querySelector('header');
+    let nav = document.querySelector('nav');
+
+    if (!header || !nav) {
+        return;
+    }
     
     // 如果是移动设备，添加菜单切换按钮
     if (window.innerWidth <= 768) {
@@ -199,7 +203,9 @@ function initMobileMenu() {
 }
 
 // 页面加载时初始化移动端菜单
-document.addEventListener('DOMContentLoaded', initMobileMenu);
+document.addEventListener('DOMContentLoaded', function() {
+    initMobileMenu();
+});
 
 // 窗口大小改变时重新初始化
 window.addEventListener('resize', initMobileMenu);
