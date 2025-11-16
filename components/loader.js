@@ -4,10 +4,40 @@ class ComponentLoader {
         this.components = {};
     }
 
+    // 从 localStorage 加载组件
+    loadComponentFromLocalStorage(componentName) {
+        try {
+            const html = localStorage.getItem(`component_${componentName}`);
+            if (html) {
+                this.components[componentName] = html;
+                return html;
+            }
+            return null;
+        } catch (error) {
+            console.error(`从 localStorage 加载组件 ${componentName} 失败:`, error);
+            return null;
+        }
+    }
+
+    // 保存组件到 localStorage
+    saveComponentToLocalStorage(componentName, html) {
+        try {
+            localStorage.setItem(`component_${componentName}`, html);
+        } catch (error) {
+            console.error(`保存组件 ${componentName} 到 localStorage 失败:`, error);
+        }
+    }
+
     // 加载组件
     async loadComponent(componentName) {
         if (this.components[componentName]) {
             return this.components[componentName];
+        }
+
+        // 尝试从 localStorage 加载
+        let html = this.loadComponentFromLocalStorage(componentName);
+        if (html) {
+            return html;
         }
 
         try {
@@ -16,8 +46,9 @@ class ComponentLoader {
                 throw new Error(`无法加载组件: ${componentName}`);
             }
             
-            const html = await response.text();
+            html = await response.text();
             this.components[componentName] = html;
+            this.saveComponentToLocalStorage(componentName, html); // 保存到 localStorage
             return html;
         } catch (error) {
             console.error(`加载组件 ${componentName} 失败:`, error);
@@ -50,8 +81,19 @@ class ComponentLoader {
         });
     }
 
+    // 预加载组件
+    async preloadComponents() {
+        await Promise.all([
+            this.loadComponent('header'),
+            this.loadComponent('footer')
+        ]);
+    }
+
     // 初始化所有组件
     async init() {
+        // 预加载头部和页脚
+        await this.preloadComponents();
+
         // 加载头部
         const headerElement = document.getElementById('header');
         if (headerElement) {
