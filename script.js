@@ -2,9 +2,6 @@
 
 // 页面加载完成后的初始化
 document.addEventListener('DOMContentLoaded', function() {
-    // 激活当前页面的导航链接
-    activateCurrentNavLink();
-    
     // 添加滚动动画效果
     addScrollAnimations();
     
@@ -15,20 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     addCardHoverEffects();
 });
 
-// 激活当前页面的导航链接
-function activateCurrentNavLink() {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const navLinks = document.querySelectorAll('nav a');
-    
-    navLinks.forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (linkHref === currentPage) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
-    });
-}
 
 // 添加滚动动画效果
 function addScrollAnimations() {

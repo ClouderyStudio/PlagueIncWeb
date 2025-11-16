@@ -106,53 +106,8 @@ class ComponentLoader {
             await this.renderComponent('footer', footerElement);
         }
 
-        // 加载Giscus评论（仅在评论页面）
-        const giscusElement = document.getElementById('giscus');
-        if (giscusElement) {
-            await this.renderComponent('giscus', giscusElement);
-            // 重新初始化Giscus
-            this.reinitializeGiscus();
-        }
-        
-        // 检查是否有Giscus容器（评论页面）
-        const giscusContainer = document.querySelector('.giscus');
-        if (giscusContainer && !giscusElement) {
-            // 重新初始化Giscus
-            this.reinitializeGiscus();
-        }
     }
 
-    // 重新初始化Giscus
-    reinitializeGiscus() {
-        // 移除现有的Giscus脚本
-        const existingScript = document.querySelector('script[src*="giscus.app"]');
-        if (existingScript) {
-            existingScript.remove();
-        }
-
-        // 获取Giscus容器的配置属性
-        const giscusElement = document.querySelector('.giscus');
-        if (giscusElement) {
-            // 创建新的Giscus脚本
-            const script = document.createElement('script');
-            script.src = 'https://giscus.app/client.js';
-            
-            // 从Giscus元素复制所有data属性
-            const attributes = giscusElement.attributes;
-            for (let i = 0; i < attributes.length; i++) {
-                const attr = attributes[i];
-                if (attr.name.startsWith('data-')) {
-                    script.setAttribute(attr.name, attr.value);
-                }
-            }
-            
-            script.crossOrigin = 'anonymous';
-            script.async = true;
-            
-            // 将脚本添加到页面
-            document.body.appendChild(script);
-        }
-    }
 }
 
 // 创建全局组件加载器实例
